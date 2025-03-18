@@ -1,0 +1,39 @@
+# The following lines describe the task definition
+{%- for definition in guidelines %}
+{{ definition }}
+{%- endfor %}
+
+{%- if demonstrations %}
+{%- for demon in demonstrations%}
+
+# This is the demonstrations
+demonstrations = {{ demon['text'].__repr__() }}
+
+# The annotation instances of demonstrations are listed here
+demonstrations_result = [
+{%- for ann in demon['annotations'] %}
+    {{ ann }},
+{%- endfor %}
+]
+
+{%- if demon['negative_instances'] %}
+
+# The possible incorrect annotation instances of demonstrations are listed here
+negative_instances = [
+{%- for negative_instance in demon['negative_instances'] %}
+    {{ negative_instance }},
+{%- endfor %}
+]
+{%- endif %}
+{%- endfor %}
+{%- endif %}
+
+# This is the text to analyze
+text = {{ text.__repr__() }}
+
+# The annotation instances that take place in the text above are listed here
+result = [
+{%- for ann in annotations %}
+    {{ ann }},
+{%- endfor %}
+]

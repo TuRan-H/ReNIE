@@ -1,0 +1,37 @@
+# The following lines describe the task definition
+{%- for definition in guidelines %}
+{{ definition }}
+{%- endfor %}
+
+{%- if demonstrations %}
+{%- for demon in demonstrations%}
+
+# This is the demonstrations
+demonstrations = {{ demon['text'].__repr__() }}
+
+# The list called demonstrations_result contains the instances for the following events:
+{%- for ann in demon['annotations'] %}
+#    - "{{ann.mention}}" triggers a {{ann.__class__.__name__}}.{{ann.subtype}} event.
+{%- endfor %}
+# 
+demonstrations_result = [
+{%- for ann in demon['annotations'] %}
+    {{ ann }},
+{%- endfor %}
+]
+{%- endfor %}
+{%- endif %}
+
+# This is the text to analyze
+text = {{ text.__repr__() }}
+
+# The list called result contains the instances for the following events:
+{%- for ann in annotations %}
+#    - "{{ann.mention}}" triggers a {{ann.__class__.__name__}}.{{ann.subtype}} event.
+{%- endfor %}
+# 
+result = [
+{%- for ann in annotations %}
+    {{ ann }},
+{%- endfor %}
+]

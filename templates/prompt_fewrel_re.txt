@@ -1,0 +1,37 @@
+# The following lines describe the task definition
+{%- for definition in guidelines %}
+{{ definition }}
+{%- endfor %}
+
+{%- if demonstrations %}
+{%- for demon in demonstrations%}
+
+# This is the demonstrations
+demonstrations = {{ demon['text'].__repr__() }}
+
+# The list called demonstrations_result contains the relation annotations for the following relations:
+{%- for rel in demon['gold'] %}
+#    - {{rel.__class__.__name__}}
+{%- endfor %}
+# 
+demonstrations_result = [
+{%- for ann in demon['annotations'] %}
+    {{ ann }},
+{%- endfor %}
+]
+{%- endfor %}
+{%- endif %}
+
+# This is the text to analyze
+text = {{ text.__repr__() }}
+
+# The list called result contains the relation annotations for the following relations:
+{%- for rel in gold %}
+#    - {{rel.__class__.__name__}}
+{%- endfor %}
+# 
+result = [
+{%- for ann in annotations %}
+    {{ ann }},
+{%- endfor %}
+]
