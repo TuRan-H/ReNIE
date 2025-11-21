@@ -1,17 +1,17 @@
-# 环境安装
+# Environment Setup
 ```bash
 conda create -n GoLLIE python==3.9.*
 bash requirements.sh
 conda activate GoLLIE
 ```
 
-# 运行代码
-## 生成数据
+# Running the Code
+## Generating Data
 ```
 bash scripts/generate_data.sh
 ```
 
-bash文件内容
+Content of the bash file
 ```bash
 #!/bin/bash
 
@@ -54,13 +54,12 @@ python -m src.generate_data \
 	--device "cuda:0"
 ```
 
-
-## 训练部分
+## Training
 ```
 bash scripts/train.sh
 ```
 
-bash文件内容
+Content of the bash file
 ```bash
 #!/bin/bash
 
@@ -77,20 +76,20 @@ export CUDA_VISIBLE_DEVICES=0
 torchrun --nproc_per_node 1 --master_port 0 src/run.py ./configs/train_random_RES.json
 ```
 
-`torchrun`: 用来控制使用DDP运行代码
+`torchrun`: Used to control running code with DDP (Distributed Data Parallel)
 
-`nproc_per_node`: 用来控制参与并行的GPU数量
+`nproc_per_node`: Used to control the number of GPUs participating in parallel processing
 
-`src/run.py`: 主文件
+`src/run.py`: Main file
 
-`./configs/train_SLR.json`: 具体的实验配置, 不同的实验对应不同的json文件
+`./configs/train_SLR.json`: Specific experiment configuration; different experiments correspond to different JSON files
 
-## 推理部分
+## Inference
 ```
 bash scripts/inference.sh
 ```
 
-bash文件内容
+Content of the bash file
 ```bash
 #!/bin/bash
 
@@ -103,16 +102,16 @@ fi
 
 CUDA_VISIBLE_DEVICES="0" python src/run.py ./configs/inference_ReNIE_random_RES.json
 ```
-推理部分使用单卡跑代码
+Inference runs on a single GPU.
 
-配置文件使用 `inference` 开头的配置文件
+Use configuration files starting with `inference`.
 
-## 评估 (计算F1 Score, 包括precision和recall)
+## Evaluation (Calculate F1 Score, including precision and recall)
 ```
 bash scripts/evaluate.sh
 ```
 
-bash文件的内容
+Content of the bash file
 ```bash
 #!/bin/bash
 
@@ -126,12 +125,11 @@ fi
 CUDA_VISIBLE_DEVICES="0" python './src/evaluate.py' './configs/evaluate.json'
 ```
 
-`CUDA_VISIBLE_DEVICES`: 控制使用第几块GPU
+`CUDA_VISIBLE_DEVICES`: Controls which GPU to use
 
-`./src/evaluate.py`: 主函数入口
+`./src/evaluate.py`: Main function entry point
 
-`./configs/evaluate.json`: 配置文件, 用来实例化HfArgparser
+`./configs/evaluate.json`: Configuration file, used to instantiate HfArgumentParser
 
-
-# 配置文件
-所有配置文件都存放于 `./configs` 中, 配置文件每个字段的含义详见 `./src/arguments.py`
+# Configuration Files
+All configuration files are located in `./configs`. For detailed explanations of each field in the configuration files, please refer to `./src/arguments.py`.
