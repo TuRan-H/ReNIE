@@ -1,12 +1,16 @@
+# The implementation of "ReNIE: Semantic Retrieval and Negative Instances Augmented Information Extraction"
+
+
 # Environment Setup
+
 ```bash
-conda create -n GoLLIE python==3.9.*
+conda create -n <your_env_name> python==3.9.*
 bash requirements.sh
-conda activate GoLLIE
+conda activate <your_env_name>
 ```
 
-# Running the Code
-## Generating Data
+# Running Code
+## Preprocessing data
 ```
 bash scripts/generate_data.sh
 ```
@@ -16,10 +20,12 @@ Content of the bash file
 #!/bin/bash
 
 source ~/.anaconda3/bin/activate
-conda activate GoLLIE
+conda activate <your_env_name>
 
 if [ -f .env ]; then
-	export $(cat .env | grep -v '^[#;]' | xargs)
+	set -a
+	source .env
+	set +a
 fi
 
 CONFIG_DIR="configs/data_configs"
@@ -64,19 +70,18 @@ Content of the bash file
 #!/bin/bash
 
 source ~/.anaconda3/bin/activate
-conda activate GoLLIE
+conda activate <your_env_name>
 
 if [ -f .env ]; then
-export $(cat .env | grep -v '^#' | xargs)
+	set -a
+	source .env
+	set +a
 fi
 
 export CUDA_VISIBLE_DEVICES=0
 
-
 torchrun --nproc_per_node 1 --master_port 0 src/run.py ./configs/train_random_RES.json
 ```
-
-`torchrun`: Used to control running code with DDP (Distributed Data Parallel)
 
 `nproc_per_node`: Used to control the number of GPUs participating in parallel processing
 
@@ -94,7 +99,7 @@ Content of the bash file
 #!/bin/bash
 
 source ~/.anaconda3/bin/activate
-conda activate GoLLIE
+conda activate <your_env_name>
 
 if [ -f .env ]; then
 export $(cat .env | grep -v '^#' | xargs)
@@ -116,7 +121,7 @@ Content of the bash file
 #!/bin/bash
 
 source ~/.anaconda3/bin/activate
-conda activate GoLLIE
+conda activate <your_env_name>
 
 if [ -f .env ]; then
 export $(cat .env | grep -v '^#' | xargs)
