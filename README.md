@@ -1,4 +1,5 @@
-# The implementation of "ReNIE: Semantic Retrieval and Negative Instances Augmented Information Extraction"
+# RENIE: Semantic Retrieval and Negative Instances Augmented Information Extraction
+The implementation of "ReNIE: Semantic Retrieval and Negative Instances Augmented Information Extraction"
 
 
 # Environment Setup
